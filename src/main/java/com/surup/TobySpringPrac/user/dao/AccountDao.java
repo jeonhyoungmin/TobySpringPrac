@@ -1,17 +1,13 @@
 package com.surup.TobySpringPrac.user.dao;
 
-import com.surup.TobySpringPrac.user.domain.User;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.sql.DataSource;
 
 public class AccountDao {
-    private ConnectionMaker connectionMaker;
 
-    public AccountDao(ConnectionMaker connectionMaker) {
-        this.connectionMaker = connectionMaker;
+    private DataSource dataSource;
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
     // AccountDao 로직
