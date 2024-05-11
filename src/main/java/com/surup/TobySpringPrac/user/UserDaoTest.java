@@ -2,6 +2,7 @@ package com.surup.TobySpringPrac.user;
 
 import com.surup.TobySpringPrac.user.dao.ConnectionMaker;
 import com.surup.TobySpringPrac.user.dao.DConnectionMaker;
+import com.surup.TobySpringPrac.user.dao.DaoFactory;
 import com.surup.TobySpringPrac.user.dao.UserDao;
 import com.surup.TobySpringPrac.user.domain.User;
 
@@ -10,8 +11,7 @@ import java.sql.SQLException;
 public class UserDaoTest {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        ConnectionMaker connectionMaker = new DConnectionMaker();
-        UserDao dao = new UserDao(connectionMaker);
+        UserDao dao = new DaoFactory().userDao();
 
         User user = new User();
         user.setId("surup");
