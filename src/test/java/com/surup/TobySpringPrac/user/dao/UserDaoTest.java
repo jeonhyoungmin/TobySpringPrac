@@ -1,6 +1,7 @@
 package com.surup.TobySpringPrac.user.dao;
 
 import com.surup.TobySpringPrac.user.domain.User;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -12,37 +13,37 @@ import static org.assertj.core.api.Assertions.*;
 @DisplayName("UserDao")
 class UserDaoTest {
 
+    private static UserDao dao;
+    private static User user1;
+    private static User user2;
+    private static User user3;
+
+    @BeforeAll
+    static void setUp() {
+        dao = new DaoFactory().userDao();
+        user1 = new User("psvm", "몽총이", "ahdchd123");
+        user2 = new User("dao", "다오", "ekdh123");
+        user3 = new User("dto", "상자", "tkdwk123");
+    }
+
     @DisplayName("[UserDao] [addAndGet]")
     @Test
     void addAndGet() throws SQLException {
-        UserDao dao = new DaoFactory().userDao();
-
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
-        User user = new User();
-        user.setId("psvm");
-        user.setName("몽총이");
-        user.setPassword("ahdchd123");
-
-        dao.add(user);
+        dao.add(user1);
         assertThat(dao.getCount()).isEqualTo(1);
 
-        User user2 = dao.get(user.getId());
+        User userGet = dao.get(user1.getId());
 
-        assertThat(user2.getName()).isEqualTo(user.getName());
-        assertThat(user2.getPassword()).isEqualTo(user.getPassword());
+        assertThat(userGet.getName()).isEqualTo(user1.getName());
+        assertThat(userGet.getPassword()).isEqualTo(user1.getPassword());
     }
 
     @DisplayName("[UserDao] [count]")
     @Test
     void count() throws SQLException {
-        UserDao dao = new DaoFactory().userDao();
-
-        User user1 = new User("psvm", "몽총이", "ahdchd123");
-        User user2 = new User("dao", "다오", "ekdh123");
-        User user3 = new User("dto", "상자", "tkdwk123");
-
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
@@ -59,8 +60,6 @@ class UserDaoTest {
     @DisplayName("[UserDao] [get] : 존재하지 않는 유저 정보 조회")
     @Test()
     void getUserFailure() throws SQLException {
-        UserDao dao = new DaoFactory().userDao();
-
         dao.deleteAll();
         assertThat(dao.getCount()).isEqualTo(0);
 
