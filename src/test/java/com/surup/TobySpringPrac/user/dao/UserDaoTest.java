@@ -8,7 +8,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.sql.SQLException;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("UserDao")
 class UserDaoTest {
