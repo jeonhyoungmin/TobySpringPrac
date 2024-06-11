@@ -2,10 +2,14 @@ package com.surup.TobySpringPrac.user.dao;
 
 import com.surup.TobySpringPrac.user.domain.User;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,9 +23,13 @@ class UserDaoTest {
     private static User user2;
     private static User user3;
 
-    @BeforeAll
-    static void setUp() {
-        dao = new DaoFactory().userDao();
+    @BeforeEach
+    public void setUp() {
+        dao = new UserDao();
+        DataSource dataSource = new SingleConnectionDataSource(
+                "jdbc:mysql://localhost/tobyspringprac", "toby", "pass123#", true
+        );
+        dao.setDataSource(dataSource);
         user1 = new User("psvm", "몽총이", "ahdchd123");
         user2 = new User("dao", "다오", "ekdh123");
         user3 = new User("dto", "상자", "tkdwk123");
